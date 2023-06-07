@@ -1,8 +1,11 @@
 package js.management.repository;
 
-import js.management.domian.ItemList;
+import js.management.domian.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ItemRepository extends JpaRepository<ItemList, Long> {
+import java.util.Optional;
 
+public interface ItemRepository extends JpaRepository<Item, Long> {
+
+    Item findByArticleNum(Long articleNum);
 }

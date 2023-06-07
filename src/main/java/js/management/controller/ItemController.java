@@ -1,20 +1,60 @@
 package js.management.controller;
 
-import js.management.domian.ItemList;
+import js.management.domian.Item;
 import js.management.service.ItemService;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class ItemController {
 
     private final ItemService itemService;
+
     //전체 조회
-    @GetMapping("/items")
-    public String itemList(@ModelAttribute("items")) {
-        itemService.findItemList();
+    @GetMapping ("/items")
+    public String itemList(Model model){
+        List<Item> items = itemService.findItemList();
+        model.addAttribute("items",items);
+        return "item/itemList";
+    }
+
+    @GetMapping("/search")
+    public String searchItem() {
+        return "item/searchForm";
+    }
+
+    //article No. 을 이용해서 Item 조회
+    @PostMapping("/search")
+    public String searchItemByArticleNum(@RequestParam("articleNum") Long articleNum, Model model) {
+
+        Item findItem = itemService.findItemByArticle(articleNum);
+
+        searchItemDto searchItemDto = new searchItemDto(findItem.getArticleNum(), findItem.getName(), findItem.getPrice());
+        searchItemDto.setExPrice((float) findItem.getPrice()/165);
+
+        model.addAttribute("item", searchItemDto);
+        return "item/searchItem";
+    }
+
+    @Data
+    static class searchItemDto {
+        private Long articleNum;
+        private String name;
+        private int price;
+        private float exPrice;
+
+        public searchItemDto(Long articleNum, String name, int price) {
+            this.articleNum = articleNum;
+            this.name = name;
+            this.price = price;
+        }
     }
 }

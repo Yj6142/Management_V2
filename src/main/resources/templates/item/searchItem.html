@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>item 검색 결과</title>
+</head>
+<body>
+<h1>Item</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Article No.</th>
+        <th>Material Description</th>
+        <th>Unit Price</th>
+        <th>Ex Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${item}">
+        <td><span th:text="${item.articleNum}"></span></td>
+        <td><span th:text="${item.name}"></span></td>
+        <td><span th:text="${item.price}"></span></td>
+        <td><span th:text="${item.exPrice}"></span></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

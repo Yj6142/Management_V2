@@ -1,13 +1,17 @@
 package js.management.domian;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 
 @Getter
-public class ItemList {
+@Entity
+public class Item {
 
+    @Id @GeneratedValue
+    @Column(name = "item_id")
     private Long id;
     private Long articleNum;
     private String name;
-    private Integer price;
+    private int price;
 
 }
