@@ -28,7 +28,7 @@ public class ItemController {
 
     @GetMapping("/search")
     public String searchItem() {
-        return "item/searchForm";
+        return "item/searchItem";
     }
 
     //article No. 을 이용해서 Item 조회
@@ -38,8 +38,6 @@ public class ItemController {
         Item findItem = itemService.findItemByArticle(articleNum);
 
         searchItemDto searchItemDto = new searchItemDto(findItem.getArticleNum(), findItem.getName(), findItem.getPrice());
-        searchItemDto.setExPrice((float) findItem.getPrice()/165);
-
         model.addAttribute("item", searchItemDto);
         return "item/searchItem";
     }
@@ -49,12 +47,13 @@ public class ItemController {
         private Long articleNum;
         private String name;
         private int price;
-        private float exPrice;
+        private String exPrice;
 
         public searchItemDto(Long articleNum, String name, int price) {
             this.articleNum = articleNum;
             this.name = name;
             this.price = price;
+            this.exPrice = String.format("%.2f", (float) this.getPrice() / 165);
         }
     }
 }
