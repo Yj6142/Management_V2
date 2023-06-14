@@ -3,10 +3,12 @@ package js.management.service;
 import js.management.domian.Item;
 import js.management.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ItemService {

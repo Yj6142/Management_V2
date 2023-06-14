@@ -46,14 +46,14 @@ public class ItemController {
     static class searchItemDto {
         private Long articleNum;
         private String name;
-        private int price;
+        private float price;
         private String exPrice;
 
-        public searchItemDto(Long articleNum, String name, int price) {
+        public searchItemDto(Long articleNum, String name, float price) {
             this.articleNum = articleNum;
             this.name = name;
             this.price = price;
-            this.exPrice = String.format("%.2f", (float) this.getPrice() / 165);
+            this.exPrice = String.format("%.2f", this.getPrice() / 160);
         }
     }
 }
