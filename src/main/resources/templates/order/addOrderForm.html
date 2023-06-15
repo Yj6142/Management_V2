@@ -27,21 +27,21 @@
                 <th scope="col">Company</th>
                 <th scope="col">Article No.</th>
                 <th scope="col">Material Description</th>
-                <th scope="col">Discount Rate</th>
+                <th scope="col">Ex Price</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:Object="${orders}">
+            <tr th:Object="${quotation}">
                 <td><span th:text="*{company}"></span></td>
                 <td><span th:text="*{item.articleNum}"></span></td>
                 <td><span th:text="*{item.name}"></span></td>
-                <td><span th:text="*{discountRate}"></span></td>
+                <td><span th:text="*{exPrice}"></span></td>
             </tr>
             </tbody>
         </table>
     </div>
     <div>
-        <form class="row g-2" th:action="@{/orders/add/{param}(param=${orders.id})}" th:object="${orders}" method="post">
+        <form class="row g-2" th:action="@{/orders/add/{param}(param=${quotation.id})}" th:object="${orders}" method="post">
 
             <div class="col-auto">
                 <label for="staticDiscount" class="visually-hidden">quantity</label>

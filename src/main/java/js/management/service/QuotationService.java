@@ -20,17 +20,17 @@ public class QuotationService {
 
     //오늘 quotation 조회
     public List<Orders> todayQuotation() {
-        return ordersRepository.findByRequestDate(LocalDate.now());
+        return ordersRepository.findByRequestDateOrderByIdDesc(LocalDate.now());
     }
 
     //회사 별 quotation 조회
     public List<Orders> findByCompanyQuotation(String company) {
-        return ordersRepository.findByCompany(company);
+        return ordersRepository.findByCompanyAndOrderStatus(company,OrderStatus.QUOTATION);
     }
 
     //ArticleNum -> quotation 조회
     public List<Orders> findByArticleNumQuotation(Item item) {
-        return ordersRepository.findByItem(item);
+        return ordersRepository.findByItemAndOrderStatus(item, OrderStatus.QUOTATION);
     }
 
     //article 번호 이용 Quotation 만들어서 저장하기
@@ -40,7 +40,7 @@ public class QuotationService {
 
     //Quotation 전체 조회
     public List<Orders> quotationList() {
-        return ordersRepository.findByOrderStatus(OrderStatus.QUOTATION);
+        return ordersRepository.findByOrderStatusOrderByIdDesc(OrderStatus.QUOTATION);
     }
 
 

@@ -13,7 +13,7 @@
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a th:href="@{/}" class="nav-link px-2 text-secondary">Home</a></li>
                 <li><a th:href="@{/search}" class="nav-link px-2 text-white">Search Item</a></li>
-                <li><a th:href="@{/orders}" class="nav-link px-2 text-white">Quotation</a></li>
+                <li><a th:href="@{/quotation}" class="nav-link px-2 text-white">Quotation</a></li>
                 <li><a th:href="@{/orders}" class="nav-link px-2 text-white">Order</a></li>
             </ul>
         </div>
@@ -21,7 +21,21 @@
 </header>
 <div class="container text-center">
     <div class="mt-5">
-        <h3>Order List</h3>
+        <form class="row row-cols-lg-auto g-3 align-items-center" th:action="@{/orders}" method="post">
+            <div class="col-12"><h2>Order List</h2></div>
+
+            <div class="col-12">
+                <select class="form-select" id="inlineFormSelectPref" name="company">
+                    <option value="">company...</option>
+                    <option value="cnc">CNC</option>
+                    <option value="ks">KS</option>
+                </select>
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">조회</button>
+            </div>
+        </form>
     </div>
     <div class="mt-5">
         <table class="table">
@@ -37,14 +51,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="orders : ${orders}">
-                <td><span th:text="${orders.company}"></span></td>
-                <td><span th:text="${orders.orderDate}"></span></td>
-                <td><span th:text="${orders.item.articleNum}"></span></td>
-                <td><span th:text="${orders.item.name}"></span></td>
-                <td><span th:text="'￥'+${#numbers.formatDecimal(orders.exPrice,1,'COMMA',2,'POINT')}"></span></td>
-                <td><span th:text="${orders.quantity}"></span></td>
-                <td><span th:text="${#numbers.formatDecimal(orders.total,1,'COMMA',2,'POINT')}"></span></td>
+            <tr th:each="order : ${orders}">
+                <td><span th:text="${order.company}"></span></td>
+                <td><span th:text="${order.orderDate}"></span></td>
+                <td><span th:text="${order.item.articleNum}"></span></td>
+                <td><span th:text="${order.item.name}"></span></td>
+                <td><span th:text="'￥'+${#numbers.formatDecimal(order.exPrice,1,'COMMA',2,'POINT')}"></span></td>
+                <td><span th:text="${order.quantity}"></span></td>
+                <td><span th:text="'￥'+${#numbers.formatDecimal(order.totalPrice,1,'COMMA',2,'POINT')}"></span></td>
             </tr>
             </tbody>
         </table>

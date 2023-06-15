@@ -10,11 +10,12 @@ import java.util.List;
 
 public interface OrdersRepository extends JpaRepository<Orders, Long> {
 
-    List<Orders> findByRequestDate(LocalDate requestDate);
+    List<Orders> findByRequestDateOrderByIdDesc(LocalDate requestDate);
 
-    List<Orders> findByCompany(String company);
+    List<Orders> findByCompanyAndOrderStatus(String company, OrderStatus status);
 
-    List<Orders> findByItem(Item item);
+    List<Orders> findByItemAndOrderStatus(Item item, OrderStatus status);
 
-    List<Orders> findByOrderStatus(OrderStatus status);
+    List<Orders> findByOrderStatusOrderByIdDesc(OrderStatus status);
+
 }
