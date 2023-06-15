@@ -49,7 +49,7 @@ public class QuotationController {
         return "redirect:/quotation?submit=true";
     }
 
-    @GetMapping("/quotation")
+    @GetMapping("/quotations")
     public String quotationList(@RequestParam(required = false) Boolean submit, Model model) {
         log.info("param[submit]={}", submit);
 
