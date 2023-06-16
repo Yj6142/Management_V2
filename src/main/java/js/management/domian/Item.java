@@ -8,7 +8,7 @@ import lombok.Getter;
 public class Item {
 
     @Id
-    private Long articleNum;
+    private String articleNum;
     private String name;
     private float price;
 

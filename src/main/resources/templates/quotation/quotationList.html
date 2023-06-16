@@ -12,7 +12,6 @@
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         <li><a th:href="@{/}" class="nav-link px-2 text-secondary">Home</a></li>
-        <li><a th:href="@{/search}" class="nav-link px-2 text-white">Search Item</a></li>
         <li><a th:href="@{/quotation}" class="nav-link px-2 text-white">Quotation</a></li>
         <li><a th:href="@{/orders}" class="nav-link px-2 text-white">Order</a></li>
       </ul>
@@ -21,19 +20,13 @@
 </header>
 <div class="container text-center">
 <div class="mt-5">
-  <form class="row row-cols-lg-auto g-3 align-items-center" th:action="@{/quotation}" method="post">
-    <div class="col-12"><h2>Quotation List</h2></div>
-
+  <form class="row row-cols-lg-auto g-3 align-items-center" th:action="@{/quotations/{company} (company = ${company})}" method="post">
     <div class="col-12">
-      <select class="form-select" id="inlineFormSelectPref" name="filter">
-        <option value="com">Company</option>
-        <option value="no">Article No.</option>
-      </select>
+      <h3 style="text-transform: uppercase" th:text="${company}+' Quotation'"></h3>
     </div>
-
     <div class="col-12">
       <div class="input-group">
-        <input type="text" class="form-control" id="inlineFormInputGroupUsername" name="value" placeholder=""/>
+        <input type="text" class="form-control" id="inlineFormInputGroupUsername" name="value" placeholder="Article No. 로 찾기"/>
       </div>
     </div>
 
@@ -46,7 +39,6 @@
     <table class="table">
       <thead>
       <tr>
-        <th scope="col">Company</th>
         <th scope="col">Request Date</th>
         <th scope="col">Article No.</th>
         <th scope="col">Material Description</th>
@@ -58,7 +50,6 @@
       </thead>
       <tbody>
       <tr th:each="quotation : ${quotations}">
-        <td><span th:text="${quotation.company}"></span></td>
         <td><span th:text="${quotation.requestDate}"></span></td>
         <td><span th:text="${quotation.item.articleNum}"></span></td>
         <td><span th:text="${quotation.item.name}"></span></td>

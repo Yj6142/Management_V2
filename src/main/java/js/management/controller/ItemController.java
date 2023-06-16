@@ -18,38 +18,41 @@ public class ItemController {
 
     private final ItemService itemService;
 
-    //전체 조회
-    @GetMapping ("/items")
+    //item 조회
+    @GetMapping ("/search")
     public String itemList(Model model){
         List<Item> items = itemService.findItemList();
         model.addAttribute("items",items);
         return "item/itemList";
     }
 
-    @GetMapping("/search")
-    public String searchItem() {
-        return "item/searchItem";
-    }
-
     //article No. 을 이용해서 Item 조회
     @PostMapping("/search")
-    public String searchItemByArticleNum(@RequestParam("articleNum") Long articleNum, Model model) {
+    public String searchItemByArticleNum(@RequestParam("articleNum") String articleNum,
+                                         @RequestParam(required = false) String company,
+                                         Model model) {
 
         Item findItem = itemService.findItemByArticle(articleNum);
 
         searchItemDto searchItemDto = new searchItemDto(findItem.getArticleNum(), findItem.getName(), findItem.getPrice());
         model.addAttribute("item", searchItemDto);
+
+        if (company==null) {
+            return "item/itemList";
+        }
+
+        model.addAttribute("company", company);
         return "item/searchItem";
     }
 
     @Data
     static class searchItemDto {
-        private Long articleNum;
+        private String articleNum;
         private String name;
         private float price;
         private String exPrice;
 
-        public searchItemDto(Long articleNum, String name, float price) {
+        public searchItemDto(String articleNum, String name, float price) {
             this.articleNum = articleNum;
             this.name = name;
             this.price = price;

@@ -18,19 +18,14 @@ public class QuotationService {
 
     private final OrdersRepository ordersRepository;
 
-    //오늘 quotation 조회
-    public List<Orders> todayQuotation() {
-        return ordersRepository.findByRequestDateOrderByIdDesc(LocalDate.now());
-    }
-
     //회사 별 quotation 조회
     public List<Orders> findByCompanyQuotation(String company) {
-        return ordersRepository.findByCompanyAndOrderStatus(company,OrderStatus.QUOTATION);
+        return ordersRepository.findByCompanyAndOrderStatusOrderByIdDesc(company,OrderStatus.QUOTATION);
     }
 
     //ArticleNum -> quotation 조회
-    public List<Orders> findByArticleNumQuotation(Item item) {
-        return ordersRepository.findByItemAndOrderStatus(item, OrderStatus.QUOTATION);
+    public List<Orders> findByArticleNumQuotation(Item item, String company) {
+        return ordersRepository.findByItemAndOrderStatusAndCompany(item, OrderStatus.QUOTATION, company);
     }
 
     //article 번호 이용 Quotation 만들어서 저장하기
@@ -38,9 +33,9 @@ public class QuotationService {
         return ordersRepository.save(orders);
     }
 
-    //Quotation 전체 조회
-    public List<Orders> quotationList() {
-        return ordersRepository.findByOrderStatusOrderByIdDesc(OrderStatus.QUOTATION);
+    //company별 오늘 quotation만 나오게
+    public List<Orders> findByRequestDateQuotation(LocalDate requestDate, String company) {
+        return ordersRepository.findByRequestDateAndCompany(requestDate, company);
     }
 
 

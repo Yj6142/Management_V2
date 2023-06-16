@@ -21,8 +21,15 @@ public class ItemService {
     }
 
     //하나만 조회
-    public Item findItemByArticle(Long articleNum) {
+    public Item findItemByArticle(String articleNum) {
         return itemRepository.findByArticleNum(articleNum);
     }
+
+    //이름 일부 들어있나 조회 후 return
+    public List<Item> findItemsByName(String name) {
+        return itemRepository.findByNameContaining(name);
+    }
+
+
 
 }

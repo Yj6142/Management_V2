@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -24,76 +26,77 @@ public class QuotationController {
     private final QuotationService quotationService;
     private final ItemService itemService;
 
-    //추가 버튼 클릭 -> Company 입력 창 & discountRate 입력
-    @GetMapping("/quotation/add/{articleNum}")
-    public String addQuotationForm(@PathVariable Long articleNum, Model model) {
+    //quotation 등록
+    @GetMapping("/quotation")
+    public String selectQuotation(Model model) {
 
-        Item findItem = itemService.findItemByArticle(articleNum);
-        QuotationDto quotation = new QuotationDto(LocalDate.now(), findItem);
-        model.addAttribute("quotation", quotation);
+        model.addAttribute("status", "quotation");
+        return "selectList/selectCompany";
 
-        return "quotation/addQuotationForm";
     }
 
-    //Company 와 discountRate 설정하고 add 클릭해서 post 방식으로 전송되면 repo에 저장
-    @PostMapping("/quotation/add/{articleNum}")
-    public String addQuotation(@PathVariable Long articleNum, @RequestParam String company,
-                               @RequestParam int discountRate) {
+    //quotation 조회
+    @GetMapping("/quotation/{company}")
+    public String searchToQuotation(@PathVariable String company,Model model) {
 
-        log.info("company, discountRate = [{}][{}]", company, discountRate);
+        model.addAttribute("company", company);
+        log.info("company = {}", company);
+
+        return "item/searchItem";
+
+    }
+
+    //articleNum 으로 Item을 찾아서 Quotation에 등록하고 해당 company quotation 출력
+    @PostMapping("/quotation/add/{company}/{articleNum}")
+    public String addQuotation(@PathVariable String company,
+                               @PathVariable String articleNum, Model model) {
 
         Item findItem = itemService.findItemByArticle(articleNum);
-        float exPrice = calcExPrice((float) discountRate, findItem);
+        float exPrice = calcExPrice(findItem);
         quotationService.addQuotation(new Orders(OrderStatus.QUOTATION,LocalDate.now(), company, findItem, exPrice));
 
-        return "redirect:/quotation?submit=true";
+        List<Orders> quotations = quotationService.findByCompanyQuotation(company);
+
+        model.addAttribute("quotations", quotations);
+        model.addAttribute("company", company);
+
+        return "redirect:/quotations/{company}?submit=true";
     }
 
-    @GetMapping("/quotations")
-    public String quotationList(@RequestParam(required = false) Boolean submit, Model model) {
-        log.info("param[submit]={}", submit);
+    //company별 quotation 조회 [submit용, 보관용]
+    @GetMapping("/quotations/{company}")
+    public String quotationList(@PathVariable String company,
+                                @RequestParam(required = false) Boolean submit,
+                                Model model) {
 
-        if(submit == null || !submit){
+        if (submit == null || !submit) {
 
-            List<Orders> quotations = quotationService.quotationList();
-            quotationToDto(quotations,model);
-
+            List<Orders> quotations = quotationService.findByCompanyQuotation(company);
+            quotationToDto(quotations, model);
             return "quotation/quotationList";
         }
 
-        List<Orders> todayQuotation = quotationService.todayQuotation();
-        quotationToDto(todayQuotation, model);
-
+        List<Orders> todayQuotations = quotationService.findByRequestDateQuotation(LocalDate.now(), company);
+        quotationToDto(todayQuotations, model);
         return "quotation/quotationSubmit";
     }
 
-    @PostMapping("/quotation")
-    public String filterQuotation(@RequestParam("filter") String filter,
+    @PostMapping("/quotations/{company}")
+    public String filterQuotation(@PathVariable String company,
                                   @RequestParam("value") String value,
                                   Model model) {
 
-        if (filter.equals("com")) {
-
-            List<Orders> quotationsByCompany = quotationService.findByCompanyQuotation(value);
-            quotationToDto(quotationsByCompany, model);
-
-        } else if (filter.equals("no")) {
-
-
-            Item itemByArticle = itemService.findItemByArticle(Long.parseLong(value));
-            List<Orders> quotationsByArticleNum = quotationService.findByArticleNumQuotation(itemByArticle);
-            quotationToDto(quotationsByArticleNum, model);
-
-        }
+        Item itemByArticle = itemService.findItemByArticle(value);
+        List<Orders> quotationsByArticleNum = quotationService.findByArticleNumQuotation(itemByArticle, company);
+        quotationToDto(quotationsByArticleNum, model);
 
         return "quotation/quotationList";
-
     }
-    private float calcExPrice(float discountRate, Item findItem) {
-        float discount = (1 - discountRate / 100);
-        float price = findItem.getPrice() / 160;
-        float exPrice = price * discount;
+    private float calcExPrice(Item findItem) {
+
+        float exPrice = findItem.getPrice() / 160;
         return exPrice;
+
     }
 
     private void quotationToDto(List<Orders> quotations, Model model) {

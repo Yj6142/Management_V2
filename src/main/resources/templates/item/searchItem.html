@@ -22,6 +22,7 @@
     <div class="mt-4">
         <form action="/search" method="post">
             <input type="text" name="articleNum">
+            <input type="hidden" name="company" th:value="${company}">
             <input type="submit" value="search">
         </form>
     </div>
@@ -33,7 +34,7 @@
                 <th scope="col">Material Description</th>
                 <th scope="col">Unit Price</th>
                 <th scope="col">Ex Price</th>
-                <th scope="col">추가</th>
+                <th scope=""></th>
             </tr>
             </thead>
             <tbody>
@@ -42,7 +43,11 @@
                 <td><span th:text="${item.name}"></span></td>
                 <td><span th:text="${item.price}"></span></td>
                 <td><span th:text="'￥'+${item.exPrice}"></span></td>
-                <td><a th:href="@{/quotation/add/{param}(param=${item.articleNum})}">추가</a></td>
+                <td>
+                    <form th:action="@{/quotation/add/{param1}/{param2} (param1=${company},param2=${item.articleNum})}" method="post">
+                        <button type="submit">추가</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

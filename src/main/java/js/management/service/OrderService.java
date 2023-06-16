@@ -36,6 +36,6 @@ public class OrderService {
 
     //company 이용해서 orderlist 가져오기
     public List<Orders> findByCompanyOrder(String company) {
-        return ordersRepository.findByCompanyAndOrderStatus(company,OrderStatus.ORDER);
+        return ordersRepository.findByCompanyAndOrderStatusOrderByIdDesc(company,OrderStatus.ORDER);
     }
 }
