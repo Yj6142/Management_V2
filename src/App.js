@@ -1,23 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
+import NavigationBar from "./components/NavigationBar";
+import {Route, Routes} from "react-router-dom";
+import QuotationPage from "./pages/QuotationPage";
+import CompanyPage from "./pages/CompanyPage";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <NavigationBar></NavigationBar>
+        <Routes>
+            <Route path="/quotation" element={<QuotationPage></QuotationPage>}>견적 등록 페이지</Route>
+            <Route path="/company" element={<CompanyPage></CompanyPage>}>회사 리스트</Route>
+        </Routes>
     </div>
   );
 }
