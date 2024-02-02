@@ -33,7 +33,7 @@ public class CompanyController {
     }
 
     @PostMapping("/company/update")
-    public Company updateCompany(@RequestParam Long id, @RequestBody CompanyFormDto company){
+    public Company updateCompany(@RequestParam Long id, @RequestBody CompanyFormDto company) {
         //id에 해당하는 company 를 찾아서 그 company 정보를 뒤집어 씌우기
         return companyService.updateCompany(id, company);
     }

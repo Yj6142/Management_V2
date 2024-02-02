@@ -26,6 +26,7 @@ public class InitDB {
         companyRepository.save(new Company("hme", Currency.getInstance(Locale.US), 1300));
 
         itemRepository.save(new Item("10293812", "dkfjqeri84712942", 12000, "Ceratize"));
+        itemRepository.save(new Item("10293012", "dkfjqer384098205", 15000, "Ceratize"));
 
     }
 }
