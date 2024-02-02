@@ -33,14 +33,12 @@ public class ItemService {
             float defaultDiscount = findCom.getDefaultDiscount();
 
             //결과로 나온 데이터들 모두 defaultDiscount 적용된 가격으로 나누기 해줘야함.
-            List<SearchItemDto> searchItemList = findItem.stream()
+            return findItem.stream()
                     .map(item -> {
                         float exPrice = item.getPrice() / defaultDiscount;
                         return new SearchItemDto(item.getId(), item.getArticleNum(), item.getName(), item.getPrice(), exPrice, findCom.getCurrency().getSymbol());
                     })
                     .toList();
-
-            return searchItemList;
         }
     }
 }
