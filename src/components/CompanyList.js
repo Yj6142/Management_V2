@@ -1,4 +1,5 @@
 import {Button, Table} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 function CompanyList({data, onDelete, onEdit}) {
     return (
@@ -9,6 +10,8 @@ function CompanyList({data, onDelete, onEdit}) {
                     <th>Company Name</th>
                     <th>Currency</th>
                     <th>Default Price</th>
+                    <th>Quotation</th>
+                    <th>Order</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -20,6 +23,8 @@ function CompanyList({data, onDelete, onEdit}) {
                             <td>{item.name}</td>
                             <td>{item.currency}</td>
                             <td>{item.defaultDiscount}</td>
+                            <td><Link to={`/quotation/${item.name}`}>quotation</Link></td>
+                            <td><Link to={`/order/${item.name}`}>order</Link></td>
                             <td><Button variant="secondary" size="sm" onClick={()=>{
                                 onEdit(item.id);
                             }}>EDIT</Button></td>

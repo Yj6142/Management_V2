@@ -15,7 +15,7 @@ function CompanyPage() {
     const [editNum, setEditNum] = useState();
 
     //초기 데이터 불러오기
-    const handleLoadClick = async ()=> {
+    const handleLoad = async ()=> {
         try {
             const company = await getCompanyList();
             setCompanyList(company);
@@ -69,6 +69,11 @@ function CompanyPage() {
             try {
                 const newCompany = await addCompany(submitData);
                 setCompanyList(prevCompanyList => [...prevCompanyList, newCompany]);
+                setInitialValue({
+                    name: '',
+                    currency: '',
+                    defaultDiscount: '',
+                });
             } catch (e) {
                 console.log("데이터 업데이트 하는데 오류가 발생했습니다.");
             }
@@ -108,17 +113,17 @@ function CompanyPage() {
     }
 
     useEffect(() => {
-        handleLoadClick();
+        handleLoad();
     }, []);
 
     return(
         <div className="Container">
             <h2>Company List</h2>
             <CompanyAddForm
-                            onSubmit={handleSubmit}
-                            initialValue={initialValue}
-                            edit={edit}
-                            onChange={handleChange}
+                onSubmit={handleSubmit}
+                initialValue={initialValue}
+                edit={edit}
+                onChange={handleChange}
             />
             <CompanyList data={companyList}
                          onDelete={handleDelete}
