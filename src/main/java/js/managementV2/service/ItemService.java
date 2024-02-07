@@ -36,7 +36,7 @@ public class ItemService {
             return findItem.stream()
                     .map(item -> {
                         float exPrice = item.getPrice() / defaultDiscount;
-                        return new SearchItemDto(item.getId(), item.getArticleNum(), item.getName(), item.getPrice(), exPrice, findCom.getCurrency().getSymbol());
+                        return new SearchItemDto(item.getId(), item.getArticleNum(), item.getName(), item.getPrice(), exPrice, findCom.getCurrency().getCurrencyCode());
                     })
                     .toList();
         }

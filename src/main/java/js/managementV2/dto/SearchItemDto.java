@@ -8,13 +8,15 @@ public class SearchItemDto {
     private String articleNum;
     private String name;
     private float price;
-    private String exPrice;
+    private float exPrice;
+    private String currencyCode;
 
-    public SearchItemDto(Long id, String articleNum, String name, float price, float exPrice, String symbol) {
+    public SearchItemDto(Long id, String articleNum, String name, float price, float exPrice, String currencyCode) {
         this.id = id;
         this.articleNum = articleNum;
         this.name = name;
         this.price = price;
-        this.exPrice = exPrice + symbol;
+        this.exPrice = exPrice;
+        this.currencyCode = currencyCode;
     }
 }
