@@ -1,17 +1,31 @@
 import {Button, Table} from "react-bootstrap";
 import {useState} from "react";
 import EditModal from "./EditModal";
+import CurrentDisplay from "./CurrentDisplay";
 
-function ItemTable({data}){
+function ItemTable({data, editData, handleSubmit}){
 
     const [show, setShow] = useState(false);
-    const [existingPrice, setExistingPrice] = useState(0);
+    const [inputPrice, setInputPrice] = useState(0);
+    const [editId, setEditId] = useState(0);
+
     const handleShow = (id) => {
         setShow(true);
+        setEditId(id);
         const editItem = data.find(n => n.id === id);
-        setExistingPrice(editItem.exPrice);
+        setInputPrice(editItem.exPrice);
     }
+
+    const handleChange = (e) => {
+        setInputPrice(e.target.value);
+    }
+
     const handleClose = () => setShow(false);
+
+    const handleEdit = () => {
+        setShow(false);
+        editData({editId, inputPrice});
+    }
 
     return (
         <div>
@@ -31,17 +45,23 @@ function ItemTable({data}){
                         <tr key={item.id}>
                             <td>{item.articleNum}</td>
                             <td>{item.name}</td>
-                            <td>{item.price}</td>
-                            <td>{item.exPrice} <Button onClick={()=>{
-                                handleShow(item.id);
-                            }}>수정</Button></td>
-                            <td><Button>추가</Button></td>
+                            <td><CurrentDisplay currency="KRW" price={item.price}/></td>
+                            <td>
+                                <CurrentDisplay currency={item.currencyCode} price={item.exPrice}/>
+                                <Button onClick={() => {
+                                    handleShow(item.id);
+                                }}>수정</Button></td>
+                            <td><Button onClick={handleSubmit}>추가</Button></td>
                         </tr>
                     ))
                 }
                 </tbody>
             </Table>
-            <EditModal show={show} handleClose={handleClose} existingPrice={existingPrice}></EditModal>
+            <EditModal show={show}
+                       handleChange={handleChange}
+                       handleEdit={handleEdit}
+                       inputPrice={inputPrice}
+                       handleClose={handleClose}/>
         </div>
     );
 

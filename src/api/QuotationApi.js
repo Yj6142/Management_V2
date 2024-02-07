@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const searchItem = async (data) => {
-
     try{
         const response = await axios.post("http://localhost:8080/search",data)
         return response.data;

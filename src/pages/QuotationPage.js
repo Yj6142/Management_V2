@@ -43,6 +43,24 @@ function QuotationPage() {
         }
     }
 
+    const handleEdit = (props) => {
+        setItem(prevItem => {
+            return prevItem.map(item => {
+                if(item.id === props.editId){
+                    return {
+                        ...item,
+                        exPrice : props.inputPrice,
+                    }
+                }
+                return item;
+            })
+        })
+    }
+
+    const handleSubmit = () => {
+
+    }
+
     return (
         <div>
             <h2>{companyName} Quotation</h2>
@@ -51,7 +69,7 @@ function QuotationPage() {
                 onChange={handleChange}
                 onSearch={handleSearch}
             />
-            <ItemTable data={item}></ItemTable>
+            <ItemTable data={item} editData={handleEdit} handleSubmit={handleSubmit}/>
         </div>
     );
 }

@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
-function EditModal({show,handleClose,existingPrice}) {
+function EditModal({show, handleClose, handleChange, handleEdit, inputPrice}) {
 
     return (
         <>
@@ -16,17 +16,15 @@ function EditModal({show,handleClose,existingPrice}) {
                             <Form.Label>Price</Form.Label>
                             <Form.Control
                                 type="number"
-                                placeholder={existingPrice}
+                                value={inputPrice}
+                                onChange={handleChange}
                                 autoFocus
                             />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary" onClick={handleEdit}>
                         Save
                     </Button>
                 </Modal.Footer>
