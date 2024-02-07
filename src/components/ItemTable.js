@@ -51,7 +51,9 @@ function ItemTable({data, editData, handleSubmit}){
                                 <Button onClick={() => {
                                     handleShow(item.id);
                                 }}>수정</Button></td>
-                            <td><Button onClick={handleSubmit}>추가</Button></td>
+                            <td><Button onClick={()=>{
+                                handleSubmit(item.id);
+                            }}>추가</Button></td>
                         </tr>
                     ))
                 }

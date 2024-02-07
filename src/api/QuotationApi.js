@@ -9,4 +9,13 @@ const searchItem = async (data) => {
     }
 }
 
-export {searchItem};
+const addQuotation = async (data) => {
+    try{
+        const response = await axios.post(`http://localhost:8080/quotation/${data.companyName}`, data.quotationList)
+        return response.data;
+    } catch (e) {
+        console.log("데이터를 저장하는데 실패하였습니다.");
+    }
+}
+
+export {searchItem, addQuotation};
