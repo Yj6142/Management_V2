@@ -11,7 +11,7 @@ const searchItem = async (data) => {
 
 const addQuotation = async (data) => {
     try{
-        const response = await axios.post(`http://localhost:8080/quotation/${data.companyName}`, data.quotationList)
+        const response = await axios.post(`http://localhost:8080/quotation/${data.companyName}`, data.itemIdList);
         return response.data;
     } catch (e) {
         console.log("데이터를 저장하는데 실패하였습니다.");

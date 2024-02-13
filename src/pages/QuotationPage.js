@@ -84,7 +84,13 @@ function QuotationPage() {
 
     const handleSave = async () => {
         try{
-            await addQuotation({companyName, quotationList});
+            const itemIdList = quotationList.map(item => {
+                return {
+                    itemId: item.id,
+                    exPrice: item.exPrice
+                };
+            })
+            await addQuotation({companyName, itemIdList});
         } catch (e) {
             console.log("데이터를 저장하는데 실패하였습니다.");
         }
