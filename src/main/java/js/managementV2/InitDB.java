@@ -3,13 +3,19 @@ package js.managementV2;
 import jakarta.annotation.PostConstruct;
 import js.managementV2.domain.Company;
 import js.managementV2.domain.Item;
+import js.managementV2.domain.Quotation;
 import js.managementV2.repository.CompanyRepository;
 import js.managementV2.repository.ItemRepository;
+import js.managementV2.repository.QuotationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Currency;
+import java.util.List;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 @Component
 @RequiredArgsConstructor
@@ -17,16 +23,21 @@ public class InitDB {
 
     private final CompanyRepository companyRepository;
     private final ItemRepository itemRepository;
+    private final QuotationRepository quotationRepository;
 
     @PostConstruct
     public void init(){
 
-        companyRepository.save(new Company("cnc", Currency.getInstance(Locale.CHINA), 160));
-        companyRepository.save(new Company("ks", Currency.getInstance(Locale.CHINA), 160));
-        companyRepository.save(new Company("hme", Currency.getInstance(Locale.US), 1300));
+        Company exCompany = new Company("CNC", Currency.getInstance(Locale.CHINA), 160);
+        companyRepository.save(exCompany);
+        companyRepository.save(new Company("KS", Currency.getInstance(Locale.CHINA), 160));
+        companyRepository.save(new Company("HME", Currency.getInstance(Locale.US), 1300));
 
-        itemRepository.save(new Item("10293812", "dkfjqeri84712942", 12000, "Ceratize"));
-        itemRepository.save(new Item("10293012", "dkfjqer384098205", 15000, "Ceratize"));
 
+        for (int i = 0; i < 100; i++) {
+            Item item = new Item(Integer.toString(i), "skdjflksdf", 23842, "ceratize");
+            itemRepository.save(item);
+            quotationRepository.save(new Quotation(item, exCompany, LocalDate.now(), item.getPrice() / exCompany.getDefaultDiscount()));
+        }
     }
 }

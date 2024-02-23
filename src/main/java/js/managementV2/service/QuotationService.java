@@ -9,6 +9,8 @@ import js.managementV2.repository.ItemRepository;
 import js.managementV2.repository.QuotationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -31,15 +33,33 @@ public class QuotationService {
         quotationRepository.save(new Quotation(item, company, LocalDate.now(), exPrice));
     }
 
-    public List<QuotationListDto> getQuotationList(String companyName) {
+    public Page<QuotationListDto> getQuotationList(String companyName, Pageable pageable) {
 
         Company company = getCompanyByName(companyName);
 
-        List<Quotation> quotationByCompany = quotationRepository.findByCompany(company);
-        return quotationByCompany.stream()
-                .map(quotation -> new QuotationListDto(quotation.getRequestDate(), quotation.getItem().getArticleNum(), quotation.getItem().getName(), quotation.getExPrice(), quotation.getOrderTime()))
-                .toList();
+        Page<Quotation> quotationByCompany = quotationRepository.findByCompany(company, pageable);
+        return getQuotationListDto(quotationByCompany);
+    }
 
+    public List<QuotationListDto> searchQuotationByNum(String companyName, String searchData) {
+
+        Company company = getCompanyByName(companyName);
+
+        List<Quotation> quotationsByNum = quotationRepository.findByCompanyAndItem_ArticleNumContaining(company, searchData);
+        return quotationsByNum.stream().map(quotation -> new QuotationListDto(
+                quotation.getId(), quotation.getRequestDate(), quotation.getItem().getArticleNum(),
+                quotation.getItem().getName(), quotation.getExPrice(), quotation.getCompany().getCurrency().getCurrencyCode(),
+                quotation.getItem().getPrice(), quotation.getOrderTime()
+        )).toList();
+    }
+
+    private static Page<QuotationListDto> getQuotationListDto(Page<Quotation> quotations) {
+        return quotations
+                .map(quotation -> new QuotationListDto(
+                        quotation.getId(), quotation.getRequestDate(), quotation.getItem().getArticleNum(),
+                        quotation.getItem().getName(), quotation.getExPrice(), quotation.getCompany().getCurrency().getCurrencyCode(),
+                        quotation.getItem().getPrice(), quotation.getOrderTime()
+                ));
     }
 
     private Company getCompanyByName(String companyName) {
