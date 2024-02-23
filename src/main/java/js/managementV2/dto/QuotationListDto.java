@@ -3,7 +3,6 @@ package js.managementV2.dto;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.Currency;
 
 @Data
 public class QuotationListDto {
