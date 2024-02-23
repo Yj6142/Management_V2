@@ -1,0 +1,12 @@
+.ItemSearchBox {
+    text-align: center;
+    border: solid 3px #5a5757;
+    border-radius: 30px;
+    padding: 30px 100px;
+    margin: 30px 100px;
+}
+
+.QuotationBox {
+    text-align: center;
+    margin: 30px 200px;
+}

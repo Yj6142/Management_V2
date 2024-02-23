@@ -47,13 +47,16 @@ function ItemTable({data, editData, handleSubmit}){
                             <td>{item.name}</td>
                             <td><CurrentDisplay currency="KRW" price={item.price}/></td>
                             <td>
-                                <CurrentDisplay currency={item.currencyCode} price={item.exPrice}/>
-                                <Button onClick={() => {
-                                    handleShow(item.id);
-                                }}>수정</Button></td>
-                            <td><Button onClick={()=>{
+                                <div style={{display: 'inline-flex'}}>
+                                    <CurrentDisplay currency={item.currencyCode} price={item.exPrice}/>
+                                    <button onClick={() => {
+                                        handleShow(item.id);
+                                    }}>✏️</button>
+                                </div>
+                            </td>
+                            <td><button onClick={()=>{
                                 handleSubmit(item.id);
-                            }}>추가</Button></td>
+                            }}>✚</button></td>
                         </tr>
                     ))
                 }

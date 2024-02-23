@@ -20,9 +20,9 @@ function QuotationTable ({data, handleDelete}) {
                             <td>{item.articleNum}</td>
                             <td>{item.name}</td>
                             <td><CurrentDisplay currency={item.currencyCode} price={item.exPrice}/></td>
-                            <td><Button onClick={()=>{
+                            <td><button onClick={()=>{
                                 handleDelete(item.id);
-                            }}>delete</Button></td>
+                            }}>−</button></td>
                         </tr>
                     ))
                 }

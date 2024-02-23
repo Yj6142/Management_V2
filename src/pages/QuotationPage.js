@@ -5,6 +5,7 @@ import {useState} from "react";
 import {addQuotation, searchItem} from "../api/QuotationApi";
 import QuotationTable from "../components/QuotationTable";
 import {Button} from "react-bootstrap";
+import './QuotationPage.css';
 
 function QuotationPage() {
 
@@ -91,6 +92,8 @@ function QuotationPage() {
                 };
             })
             await addQuotation({companyName, itemIdList});
+            setQuotationList([]);
+            window.alert("저장되었습니다.");
         } catch (e) {
             console.log("데이터를 저장하는데 실패하였습니다.");
         }
@@ -98,16 +101,20 @@ function QuotationPage() {
 
     return (
         <div>
-            <h2>Item Search</h2>
-            <ItemSearchBox
-                initialForm={initialForm}
-                onChange={handleChange}
-                onSearch={handleSearch}
-            />
-            <ItemTable data={item} editData={handleEdit} handleSubmit={handleSubmit}/>
-            <h2>{companyName} Quotation</h2>
-            <Button onClick={handleSave}>저장</Button>
-            <QuotationTable data={quotationList} handleDelete={handleDelete}/>
+            <div className="ItemSearchBox">
+                <h3>Item Search</h3>
+                <ItemSearchBox
+                    initialForm={initialForm}
+                    onChange={handleChange}
+                    onSearch={handleSearch}
+                />
+                <ItemTable data={item} editData={handleEdit} handleSubmit={handleSubmit}/>
+            </div>
+            <div className="QuotationBox">
+                <h3>{companyName} Quotation</h3>
+                <QuotationTable data={quotationList} handleDelete={handleDelete}/>
+                <Button onClick={handleSave}>저장</Button>
+            </div>
         </div>
     );
 }
