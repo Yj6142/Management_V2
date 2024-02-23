@@ -1,4 +1,4 @@
-import {Button, Table} from "react-bootstrap";
+import {Table} from "react-bootstrap";
 import {useState} from "react";
 import EditModal from "./EditModal";
 import CurrentDisplay from "./CurrentDisplay";

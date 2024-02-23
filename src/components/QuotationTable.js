@@ -1,4 +1,4 @@
-import {Button, Table} from "react-bootstrap";
+import {Table} from "react-bootstrap";
 import CurrentDisplay from "./CurrentDisplay";
 
 function QuotationTable ({data, handleDelete}) {
