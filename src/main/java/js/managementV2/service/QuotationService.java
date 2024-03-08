@@ -53,6 +53,10 @@ public class QuotationService {
         )).toList();
     }
 
+    public Quotation getQuotationById(Long id) {
+        return quotationRepository.findById(id).orElseThrow();
+    }
+
     private static Page<QuotationListDto> getQuotationListDto(Page<Quotation> quotations) {
         return quotations
                 .map(quotation -> new QuotationListDto(

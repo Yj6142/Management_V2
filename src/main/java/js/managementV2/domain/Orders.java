@@ -22,4 +22,13 @@ public class Orders {
     private int quantity;
     private float profit;
 
+    public Orders(Quotation quotation, LocalDate orderDate, int quantity) {
+        this.quotation = quotation;
+        this.orderDate = orderDate;
+        this.quantity = quantity;
+    }
+
+    public Orders() {
+
+    }
 }

@@ -35,4 +35,9 @@ public class Quotation {
         this.exPrice = exPrice;
     }
 
+    public void addOrderTime() {
+        this.orderTime++;
+    }
+
+
 }
