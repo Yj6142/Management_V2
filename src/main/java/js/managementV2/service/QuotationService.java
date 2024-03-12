@@ -4,7 +4,6 @@ import js.managementV2.domain.Company;
 import js.managementV2.domain.Item;
 import js.managementV2.domain.Quotation;
 import js.managementV2.dto.QuotationListDto;
-import js.managementV2.repository.CompanyRepository;
 import js.managementV2.repository.ItemRepository;
 import js.managementV2.repository.QuotationRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +20,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuotationService {
 
-    private final ItemRepository itemRepository;
-    private final CompanyRepository companyRepository;
     private final QuotationRepository quotationRepository;
+    private final CompanyService companyService;
+    private final ItemService itemService;
 
     public void addQuotation(Long itemId, float exPrice, String companyName) {
-        Item item = itemRepository.findById(itemId).orElseThrow();
+        Item item = itemService.findItemById(itemId);
         Company company = getCompanyByName(companyName);
 
         log.info("item={}, company={}, exPrice={}", item, company, exPrice);
@@ -67,6 +66,6 @@ public class QuotationService {
     }
 
     private Company getCompanyByName(String companyName) {
-        return companyRepository.findByName(companyName).orElseThrow();
+        return companyService.findCompanyByName(companyName);
     }
 }

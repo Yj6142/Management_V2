@@ -10,6 +10,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -21,6 +22,11 @@ public class CompanyService {
 
     public List<Company> companyList() {
         return companyRepository.findAll();
+    }
+
+    //company 이름 이용해서 Company 찾아오기
+    public Company findCompanyByName(String name) {
+        return companyRepository.findByName(name).orElseThrow();
     }
 
     public Company addCompany(CompanyFormDto company) {

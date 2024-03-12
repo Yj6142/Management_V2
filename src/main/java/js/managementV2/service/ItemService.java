@@ -18,7 +18,7 @@ import java.util.List;
 public class ItemService {
 
     private final ItemRepository itemRepository;
-    private final CompanyRepository companyRepository;
+    private final CompanyService companyService;
 
     //Option1. articleNum 이용해서 item 검색하는 경우
     public List<SearchItemDto> findItemByArticleNum(String company, String articleNum) {
@@ -29,7 +29,7 @@ public class ItemService {
             //만약에 반환된 item 이 하나도 없을 경우 "조회된 아이템이 없습니다" 라고 결과 화면에 출력되도록 설정
             throw new ErrorResponseException(HttpStatus.BAD_REQUEST);
         } else {
-            Company findCom = companyRepository.findByName(company).orElseThrow();
+            Company findCom = companyService.findCompanyByName(company);
             float defaultDiscount = findCom.getDefaultDiscount();
 
             //결과로 나온 데이터들 모두 defaultDiscount 적용된 가격으로 나누기 해줘야함.
@@ -40,5 +40,9 @@ public class ItemService {
                     })
                     .toList();
         }
+    }
+
+    public Item findItemById(Long id) {
+        return itemRepository.findById(id).orElseThrow();
     }
 }
