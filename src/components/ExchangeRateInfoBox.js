@@ -5,7 +5,7 @@ function ExchangeRateInfoBox({data}) {
 
     const currencyInfo = {
         USD : {name : "미국", flagImage : "/usa.svg"},
-        CNH : {name : "중국", flagImage : "/china.png"},
+        CNY : {name : "중국", flagImage : "/china.png"},
         EUR : {name : "유럽", flagImage: "/europe.png"}
     }
 

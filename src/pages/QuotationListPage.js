@@ -5,6 +5,7 @@ import QuotationList from "../components/QuotationList";
 import PaginationBox from "../components/PaginationBox";
 import "./QuotationListPage.css";
 import ItemSearchBox from "../components/ItemSearchBox";
+import {orderItem} from "../api/OrderItemApi";
 
 function QuotationListPage(){
     const {companyName} = useParams();
@@ -62,6 +63,11 @@ function QuotationListPage(){
         }
     }
 
+    const handleOrder = (props) => {
+        //quotation 번호 + 주문 수량 서버로 전송
+        orderItem(props);
+    }
+
     useEffect(() => {
         handleLoad(currentPage);
     }, [currentPage]);
@@ -70,7 +76,7 @@ function QuotationListPage(){
         <div className="quotationListBox">
             <h2 onClick={() => window.location.reload()} style={{cursor: 'pointer'}}>{companyName} Quotation List</h2>
             <ItemSearchBox onSearch={handleSearch} onChange={handleChange} initialForm={initialForm}/>
-            <QuotationList data={quotations}/>
+            <QuotationList data={quotations} orderData={handleOrder}/>
             <PaginationBox totalPage={totalPage} active={currentPage} onChangePage={handleChangePage}/>
         </div>
     );

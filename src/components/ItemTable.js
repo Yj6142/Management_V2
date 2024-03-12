@@ -1,6 +1,6 @@
 import {Table} from "react-bootstrap";
 import {useState} from "react";
-import EditModal from "./EditModal";
+import EditModal from "./modals/EditModal";
 import CurrentDisplay from "./CurrentDisplay";
 
 function ItemTable({data, editData, handleSubmit}){
@@ -26,6 +26,7 @@ function ItemTable({data, editData, handleSubmit}){
         setShow(false);
         editData({editId, inputPrice});
     }
+
 
     return (
         <div>
