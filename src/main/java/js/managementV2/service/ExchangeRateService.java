@@ -2,6 +2,7 @@ package js.managementV2.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import js.managementV2.domain.ExchangeRateInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,12 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Currency;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
+@Slf4j
 public class ExchangeRateService {
 
     private final String callBackUrl;
@@ -59,6 +63,15 @@ public class ExchangeRateService {
 
         return result;
     }
+
+    public ExchangeRateInfo getExchangeRate(Currency currency) {
+        List<ExchangeRateInfo> exchangeRateInfoList = callExchangeApi();
+        return exchangeRateInfoList.stream()
+                .filter(item -> item.getCurrencyCode().equals(currency.getCurrencyCode()))
+                .findFirst()
+                .orElseThrow();
+    }
+
 
     private InputStream getNetworkConnection(HttpURLConnection urlConnection) throws IOException {
         urlConnection.setConnectTimeout(3000);

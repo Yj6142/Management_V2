@@ -1,5 +1,6 @@
 package js.managementV2.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -24,4 +25,20 @@ public class ExchangeRateInfo {
     @JsonProperty("deal_bas_r")
     private String exchangeRate;
 
+    @JsonCreator
+    public ExchangeRateInfo(@JsonProperty("result") int result,
+                            @JsonProperty("cur_unit") String currencyCode,
+                            @JsonProperty("tts") String tts,
+                            @JsonProperty("ttb") String ttb,
+                            @JsonProperty("deal_bas_r") String exchangeRate) {
+        this.result = result;
+        if (currencyCode.equals("CNH")) {
+            this.currencyCode = "CNY";
+        } else {
+            this.currencyCode = currencyCode;
+        }
+        this.tts = tts;
+        this.ttb = ttb;
+        this.exchangeRate = exchangeRate;
+    }
 }
