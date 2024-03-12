@@ -4,7 +4,6 @@ import js.managementV2.domain.Company;
 import js.managementV2.domain.Item;
 import js.managementV2.domain.Quotation;
 import js.managementV2.dto.QuotationListDto;
-import js.managementV2.repository.ItemRepository;
 import js.managementV2.repository.QuotationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

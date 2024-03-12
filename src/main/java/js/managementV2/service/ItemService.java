@@ -3,7 +3,6 @@ package js.managementV2.service;
 import js.managementV2.domain.Company;
 import js.managementV2.domain.Item;
 import js.managementV2.dto.SearchItemDto;
-import js.managementV2.repository.CompanyRepository;
 import js.managementV2.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

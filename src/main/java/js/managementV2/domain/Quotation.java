@@ -2,10 +2,8 @@ package js.managementV2.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.hibernate.query.Order;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Getter
