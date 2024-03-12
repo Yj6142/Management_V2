@@ -15,8 +15,10 @@ public class OrderListDto {
     private float imPrice;
     private float exPrice;
     private float profit;
+    private String companyName;
+    private String currencyCode;
 
-    public OrderListDto(Long id, LocalDate orderDate, String articleNum, String itemName, int quantity, float imPrice, float exPrice, float profit) {
+    public OrderListDto(Long id, LocalDate orderDate, String articleNum, String itemName, int quantity, float imPrice, float exPrice, float profit, String companyName, String currencyCode) {
         this.id = id;
         this.orderDate = orderDate;
         this.articleNum = articleNum;
@@ -25,5 +27,7 @@ public class OrderListDto {
         this.imPrice = imPrice;
         this.exPrice = exPrice;
         this.profit = profit;
+        this.companyName = companyName;
+        this.currencyCode = currencyCode;
     }
 }

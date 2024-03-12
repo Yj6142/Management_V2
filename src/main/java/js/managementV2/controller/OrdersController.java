@@ -27,10 +27,16 @@ public class OrdersController {
         return ResponseEntity.ok("저장이 완료되었습니다.");
     }
 
+    @GetMapping("/orderList")
+    public Page<OrderListDto> getOrderList(@RequestParam(required = false, defaultValue = "1") int page) {
+        PageRequest pageable = PageRequest.of(page - 1, 15, Sort.by("orderDate").descending());
+        return orderService.getOrderList(pageable);
+    }
+
     @GetMapping("/orders/{companyName}")
-    public Page<OrderListDto> getOrderList(@PathVariable String companyName, @RequestParam(required = false, defaultValue = "1") int page) {
+    public Page<OrderListDto> getOrderListByCompany(@PathVariable String companyName, @RequestParam(required = false, defaultValue = "1") int page) {
         log.info("companyName={}", companyName);
-        PageRequest pageable = PageRequest.of(page - 1, 15, Sort.by("id").descending());
+        PageRequest pageable = PageRequest.of(page - 1, 15, Sort.by("orderDate").descending());
         return orderService.getOrdersByCompany(companyName, pageable);
     }
 

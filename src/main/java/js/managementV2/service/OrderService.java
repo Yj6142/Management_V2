@@ -44,17 +44,34 @@ public class OrderService {
         return ordersRepository.findByQuotation_Company(company, pageable)
                 .map(orders -> {
                     Item findItem = orders.getQuotation().getItem();
-                    return new OrderListDto(
-                            orders.getId(),
-                            orders.getOrderDate(),
-                            findItem.getArticleNum(),
-                            findItem.getName(),
-                            orders.getQuantity(),
-                            findItem.getPrice(),
-                            orders.getQuotation().getExPrice(),
-                            orders.getProfit());
+                    return getOrderListDto(orders, findItem, company);
                 });
     }
+
+    public Page<OrderListDto> getOrderList(Pageable pageable) {
+        return ordersRepository.findAll(pageable)
+                .map(orders -> {
+                    Item findItem = orders.getQuotation().getItem();
+                    Company company = orders.getQuotation().getCompany();
+                    return getOrderListDto(orders, findItem, company);
+                });
+    }
+
+    private static OrderListDto getOrderListDto(Orders orders, Item findItem, Company company) {
+        return new OrderListDto(
+                orders.getId(),
+                orders.getOrderDate(),
+                findItem.getArticleNum(),
+                findItem.getName(),
+                orders.getQuantity(),
+                findItem.getPrice(),
+                orders.getQuotation().getExPrice(),
+                orders.getProfit(),
+                company.getName(),
+                company.getCurrency().getCurrencyCode()
+        );
+    }
+
 
     public List<TodayProfitDto> calcTodayProfit() {
         return ordersRepository.calcProfitByCompanyAndDate();
