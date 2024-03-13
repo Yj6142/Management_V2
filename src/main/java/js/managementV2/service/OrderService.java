@@ -31,7 +31,7 @@ public class OrderService {
 
         //quotation 에서 회사정보 찾아서 currencyCode 가져와서 exchangeRate 구하기
         ExchangeRateInfo exchangeRateInfo = exchangeRateService.getExchangeRate(quotation.getCompany().getCurrency());
-        Float exchangeRate = Float.valueOf(exchangeRateInfo.getExchangeRate());
+        float exchangeRate = Float.parseFloat(exchangeRateInfo.getExchangeRate().replaceAll(",", ""));
 
         //이윤 계산하기 (견적 나간 가격 * 현재 환율 - 원래 물건 가격)
         float profit = (quotation.getExPrice() * exchangeRate) - quotation.getItem().getPrice();
@@ -48,6 +48,15 @@ public class OrderService {
                 });
     }
 
+    public List<OrderListDto> getOrdersByOrderDate(LocalDate orderDate, String companyName) {
+        Company company = companyService.findCompanyByName(companyName);
+        return ordersRepository.findByOrderDateAndQuotation_Company(orderDate, company).stream()
+                .map(orders -> {
+                    Item findItem = orders.getQuotation().getItem();
+                    return getOrderListDto(orders, findItem, company);
+                }).toList();
+    }
+
     public Page<OrderListDto> getOrderList(Pageable pageable) {
         return ordersRepository.findAll(pageable)
                 .map(orders -> {
@@ -55,6 +64,14 @@ public class OrderService {
                     Company company = orders.getQuotation().getCompany();
                     return getOrderListDto(orders, findItem, company);
                 });
+    }
+
+    public List<TodayProfitDto> calcProfit() {
+        return ordersRepository.calcProfitByCompanyAndDate();
+    }
+
+    public List<TodayProfitDto> calcTodayProfit(LocalDate orderDate) {
+        return ordersRepository.calcTodayProfitByOrderDate(orderDate);
     }
 
     private static OrderListDto getOrderListDto(Orders orders, Item findItem, Company company) {
@@ -70,11 +87,6 @@ public class OrderService {
                 company.getName(),
                 company.getCurrency().getCurrencyCode()
         );
-    }
-
-
-    public List<TodayProfitDto> calcTodayProfit() {
-        return ordersRepository.calcProfitByCompanyAndDate();
     }
 
 }

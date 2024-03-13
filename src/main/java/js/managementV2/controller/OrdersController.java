@@ -12,6 +12,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -40,14 +42,38 @@ public class OrdersController {
         return orderService.getOrdersByCompany(companyName, pageable);
     }
 
+    @PostMapping("/orders/{companyName}")
+    public List<OrderListDto> getOrdersFilteredByDate(@PathVariable String companyName, @RequestBody OrderDateDto orderDateDto) {
+        //String 으로 받은 DateTime -> Date 로 나눠서 LocalDate 로 형변환
+        LocalDate orderDate = stringToLocalDate(orderDateDto);
+        return orderService.getOrdersByOrderDate(orderDate, companyName);
+    }
+
     @GetMapping("/orders/todayProfit")
     public List<TodayProfitDto> getTodayProfit() {
-        return orderService.calcTodayProfit();
+        return orderService.calcProfit();
+    }
+
+    @PostMapping("/orders/todayProfit")
+    public List<TodayProfitDto> getTodayProfitByOrderDate(@RequestBody OrderDateDto orderDateDto){
+        log.info("orderDateDto = {}", orderDateDto);
+        LocalDate orderDate = stringToLocalDate(orderDateDto);
+        return orderService.calcTodayProfit(orderDate);
+    }
+
+    private static LocalDate stringToLocalDate(OrderDateDto orderDateDto) {
+        String dateTimeToDate = orderDateDto.orderDate.split("T")[0];
+        return LocalDate.parse(dateTimeToDate, DateTimeFormatter.ISO_DATE);
     }
 
     @Data
     static class OrderItemDto {
         private Long quotationId;
         private int quantity;
+    }
+
+    @Data
+    static class OrderDateDto {
+        private String orderDate;
     }
 }
