@@ -24,7 +24,7 @@ function CompanyList({data, onDelete, onEdit}) {
                             <td>{item.currency}</td>
                             <td>{item.defaultDiscount}</td>
                             <td><Link to={`/quotation/${item.name}`}>✚</Link> <Link to={`/quotations/${item.name}`}>📜</Link></td>
-                            <td><Link to={`/order/${item.name}`}>order</Link></td>
+                            <td><Link to={`/orders/${item.name}`}>order</Link></td>
                             <td><Button variant="secondary" size="sm" onClick={()=>{
                                 onEdit(item.id);
                             }}>EDIT</Button></td>
