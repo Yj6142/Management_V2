@@ -31,6 +31,11 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
             "GROUP BY q.company.id")
     List<TodayProfitDto> calcTodayProfitByOrderDate(LocalDate orderDate);
 
+    @Query("SELECT " +
+            "new js.managementV2.dto.TodayProfitDto(o.orderDate, sum(o.profit)) " +
+            "FROM Orders o " +
+            "where o.orderDate = :orderDate ")
+    TodayProfitDto calcTotalDailyProfit(LocalDate orderDate);
 
 
 }

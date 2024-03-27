@@ -74,6 +74,10 @@ public class OrderService {
         return ordersRepository.calcTodayProfitByOrderDate(orderDate);
     }
 
+    public TodayProfitDto calcDailyTotalProfit(LocalDate orderDate) {
+        return ordersRepository.calcTotalDailyProfit(orderDate);
+    }
+
     private static OrderListDto getOrderListDto(Orders orders, Item findItem, Company company) {
         return new OrderListDto(
                 orders.getId(),

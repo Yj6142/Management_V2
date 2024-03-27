@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -55,10 +57,22 @@ public class OrdersController {
     }
 
     @PostMapping("/orders/todayProfit")
-    public List<TodayProfitDto> getTodayProfitByOrderDate(@RequestBody OrderDateDto orderDateDto){
+    public Map<String, Object> getTodayProfitByOrderDate(@RequestBody OrderDateDto orderDateDto){
+
         log.info("orderDateDto = {}", orderDateDto);
         LocalDate orderDate = stringToLocalDate(orderDateDto);
-        return orderService.calcTodayProfit(orderDate);
+
+        //해당 orderDate 의 회사별 이윤 및 해당 날짜 이윤 가져오기
+        List<TodayProfitDto> profitList = orderService.calcTodayProfit(orderDate);
+        TodayProfitDto totalProfit = orderService.calcDailyTotalProfit(orderDate);
+
+        Map<String, Object> todayProfitResult = new HashMap<>();
+        todayProfitResult.put("totalProfit", totalProfit.getTotalProfit());
+        todayProfitResult.put("profitList", profitList);
+
+        log.info("todayProfitResult = {}", todayProfitResult);
+
+        return todayProfitResult;
     }
 
     private static LocalDate stringToLocalDate(OrderDateDto orderDateDto) {

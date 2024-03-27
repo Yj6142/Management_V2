@@ -15,4 +15,9 @@ public class TodayProfitDto {
         this.companyName = companyName;
         this.totalProfit = totalProfit;
     }
+
+    public TodayProfitDto(LocalDate orderDate, Double totalProfit) {
+        this.orderDate = orderDate;
+        this.totalProfit = totalProfit;
+    }
 }
