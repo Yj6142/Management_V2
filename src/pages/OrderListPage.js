@@ -4,6 +4,7 @@ import {getOrderList, getOrdersFilteredByDate} from "../api/OrderItemApi";
 import PaginationBox from "../components/PaginationBox";
 import OrderList from "../components/OrderList";
 import CalendarBox from "../components/CalendarBox";
+import "./OrderListPage.css";
 
 function OrderListPage() {
 
@@ -13,7 +14,7 @@ function OrderListPage() {
     const [orderList, setOrderList] = useState([]);
 
     const handleLoad = async (page) => {
-        try{
+        try {
             const response = await getOrderList({companyName, page});
             setOrderList(response.content);
             setTotalPage(response.totalPages);
@@ -38,13 +39,18 @@ function OrderListPage() {
     }, [currentPage]);
 
     return (
-        <div>
-            <h2>{companyName} Order List</h2>
-            <CalendarBox onSubmit={handleSubmit}/>
-            <OrderList data={orderList}/>
-            <PaginationBox totalPage={totalPage} active={currentPage} onChangePage={handleChangePage}/>
+        <div className="orderBox">
+            <div className="headerBox">
+                <h3>{companyName} Order List</h3>
+                <CalendarBox onSubmit={handleSubmit}/>
+            </div>
+            <div className="orderList">
+                <OrderList data={orderList}/>
+                <PaginationBox totalPage={totalPage} active={currentPage} onChangePage={handleChangePage}/>
+            </div>
         </div>
     );
+
 
 }
 

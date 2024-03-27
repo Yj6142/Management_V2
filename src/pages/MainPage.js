@@ -1,8 +1,10 @@
 import {useEffect, useState} from "react";
 import {getExchangeRateInfo} from "../api/ExchangeRateApi";
 import ExchangeRateInfoBox from "../components/ExchangeRateInfoBox";
+import MenuList from "../components/MenuList";
+import "./MainPage.css";
 
-function ExchangeRatePage () {
+function MainPage () {
 
     const [exchangeRateList, setExchangeRateList] = useState([]);
 
@@ -15,7 +17,6 @@ function ExchangeRatePage () {
         }
     }
 
-    const date = new Date();
 
     useEffect(() => {
         handleLoad();
@@ -23,11 +24,13 @@ function ExchangeRatePage () {
 
 
     return (
-        <div>
-            <h2>{`${date.getMonth()}월 ${date.getDate()}일 ${date.getHours()}시 `}환율 정보</h2>
-            <ExchangeRateInfoBox data={exchangeRateList}/>
+        <div className="mainContainer">
+            <div className="exchangeRate">
+                <ExchangeRateInfoBox data={exchangeRateList}/>
+            </div>
+            <MenuList/>
         </div>
     );
 }
 
-export default ExchangeRatePage;
+export default MainPage;

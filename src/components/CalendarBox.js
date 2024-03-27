@@ -12,19 +12,15 @@ function CalendarBox({onSubmit}) {
     }
 
     return (
-        <div className="row">
-            <div className="col">
-                <DatePicker
-                    showIcon
-                    dateFormat="yyyy/MM/dd"
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
-                    form="external-form"
-                />
-            </div>
-            <div className="col">
-                <Button onClick={handleSelect}>선택</Button>
-            </div>
+        <div>
+            <DatePicker
+                showIcon
+                dateFormat="yyyy/MM/dd"
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                form="external-form"
+            />
+            <Button onClick={handleSelect}>선택</Button>
         </div>
 
     );

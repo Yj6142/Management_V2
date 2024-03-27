@@ -73,11 +73,16 @@ function QuotationListPage(){
     }, [currentPage]);
 
     return (
-        <div className="quotationListBox">
-            <h2 onClick={() => window.location.reload()} style={{cursor: 'pointer'}}>{companyName} Quotation List</h2>
-            <ItemSearchBox onSearch={handleSearch} onChange={handleChange} initialForm={initialForm}/>
-            <QuotationList data={quotations} orderData={handleOrder}/>
-            <PaginationBox totalPage={totalPage} active={currentPage} onChangePage={handleChangePage}/>
+        <div className="quotationBox">
+            <div className="quotationHeader">
+                <h3 onClick={() => window.location.reload()} style={{cursor: 'pointer'}}>{companyName} Quotation
+                    List</h3>
+                <ItemSearchBox onSearch={handleSearch} onChange={handleChange} initialForm={initialForm}/>
+            </div>
+            <div className="quotationList">
+                <QuotationList data={quotations} orderData={handleOrder}/>
+                <PaginationBox totalPage={totalPage} active={currentPage} onChangePage={handleChangePage}/>
+            </div>
         </div>
     );
 }

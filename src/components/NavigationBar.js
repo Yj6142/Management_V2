@@ -7,9 +7,8 @@ function NavigationBar () {
             <Navbar.Brand href="/home"></Navbar.Brand>
             <Nav className="me-auto">
                 <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/company">Company</Nav.Link>
-                <Nav.Link href="/orders">Order List</Nav.Link>
-                <Nav.Link href="/todayRate">환율 정보</Nav.Link>
+                <Nav.Link href="/company">견적/주문</Nav.Link>
+                <Nav.Link href="/orders">이윤</Nav.Link>
             </Nav>
         </Container>
     </Navbar>
