@@ -1,0 +1,19 @@
+.headerBox{
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+    margin: 30px 50px;
+    padding-bottom: 10px;
+}
+
+.orderList {
+    text-align: center;
+    margin: 0px 50px;
+}
+
+.orderBox {
+    border: #5a5757 solid 5px;
+    margin: 30px;
+    border-radius: 10px;
+}

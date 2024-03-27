@@ -1,0 +1,19 @@
+.quotationHeader{
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+    margin: 30px 50px;
+    padding-bottom: 10px;
+}
+
+.quotationList{
+    text-align: center;
+    margin: 0px 50px;
+}
+
+.quotationBox{
+    border: #5a5757 solid 5px;
+    margin: 30px 50px;
+    border-radius: 10px;
+}
